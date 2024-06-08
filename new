@@ -1,0 +1,65 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main()
+{
+string str;
+ifstream inFile{"file1.txt"};
+ofstream outFile{"file2.txt"};
+if(inFile)
+{
+    while(getline(inFile,str))
+    {
+        outFile<<str<<"\n";
+    }
+}
+else
+{
+    cout<<"Failed";
+}
+char first_file[] ="file1.txt";
+char new_file[] ="newfile1.txt";
+if(rename(first_file,new_file)!=0)
+    cout<<"Failed";
+else
+    cout<<"Success";
+}
+
+
+
+
+#include<iostream>
+#include<unistd.h>
+#include<sys/wait.h>
+using namespace std;
+
+int main()
+{
+    int  pid;
+    pid=fork();
+    
+    if(pid<0)
+    {
+        cout<<"fork is cancel";
+        return 1;
+    }
+    
+    else if(pid==0)
+    {
+        cout<<"parent process"<<getpid()<<endl;
+        execl("bin/ls","ls","1",NULL);
+        cout<<"fail";
+        
+        return 1;
+    }
+    
+    else
+    {
+        cout<<"sucess";
+        wait(NULL);
+        cout<<"child sucess";
+        return 1;
+    }   
+}
+
+
